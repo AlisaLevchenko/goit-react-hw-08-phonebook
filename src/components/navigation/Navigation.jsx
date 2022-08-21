@@ -1,18 +1,16 @@
 import React from 'react';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-// import { getLoggedIn } from 'redux/authorization/authorization-selectors';
+import { getIsAuth } from '../../redux/auth/authSelector';
 
 const Navigation = () => {
-  // const isLoggedIn = useSelector(getLoggedIn);
+  const isAuth = useSelector(getIsAuth);
   return (
     <nav>
       <NavLink to="/">Home</NavLink>
-      {/* {isLoggedIn && ( */}
-      <NavLink to="/contacts">Contacts</NavLink>
-      {/* )} */}
-      <NavLink to="/register">Sign Up</NavLink>
-      <NavLink to="/login">Login</NavLink>
+      {isAuth && <NavLink to="/contacts">Contacts</NavLink>}
+      {!isAuth && <NavLink to="/register">Sign Up</NavLink>}
+      {!isAuth && <NavLink to="/login">Login</NavLink>}
     </nav>
   );
 };

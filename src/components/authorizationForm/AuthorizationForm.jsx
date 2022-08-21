@@ -3,12 +3,16 @@ import {
   // useSelector,
   useDispatch,
 } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { signupUser, loginUser } from '../../redux/auth/authOperations';
+import s from './AuthorizationForm.module.css';
 
-export default function AuthorizationForm() {
+export default function AuthorizationForm({ title }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChangeInput = evt => {
     const { name, value } = evt.target;
@@ -37,7 +41,28 @@ export default function AuthorizationForm() {
     //   return;
     // }
     // const oneContact = { name, phone };
-    dispatch();
+    // dispatch();
+    if (
+      (title === 'SignUp' && name === '') ||
+      password === '' ||
+      email === ''
+    ) {
+      alert('completed all fields ');
+      return;
+    }
+    if (title === 'SignUp') {
+      const userRegisterData = { name, email, password };
+      dispatch(signupUser(userRegisterData));
+      navigate('/contacts');
+      resetForm();
+      return;
+    }
+    console.log({ name, email, password });
+
+    const userLoginData = { email, password };
+    dispatch(loginUser(userLoginData));
+
+    navigate('/contacts');
     resetForm();
   };
 
@@ -48,54 +73,46 @@ export default function AuthorizationForm() {
   };
 
   return (
-    <div>
-      {' '}
-      <form onSubmit={handleSubmit} autoComplete="off">
-        <label className="{s.lable}">
-          Name
-          <input
-            className="{s.input}"
-            type="text"
-            name="name"
-            value={name}
-            onChange={handleChangeInput}
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-          />
-        </label>
-        <label className="{s.lable}">
-          Email
-          <input
-            className="{s.input}"
-            type="tel"
-            name="email"
-            value={email}
-            onChange={handleChangeInput}
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-          />
-        </label>
-        <label className="{s.lable}">
-          Password
-          <input
-            className="{s.input}"
-            type="tel"
-            name="password"
-            value={password}
-            onChange={handleChangeInput}
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-          />
-        </label>
-        <button className="{s.button}" type="submit">
-          Add contact
-          {/* {location === '/login' ? 'Login' : 'Sign Up'} */}
-        </button>
+    <form className={s.form} onSubmit={handleSubmit} autoComplete="off">
+      <label className={s.lable}>
+        Name
+        <input
+          className={s.input}
+          type="text"
+          name="name"
+          value={name}
+          onChange={handleChangeInput}
+          required
+        />
+      </label>
+      <label className={s.lable}>
+        Email
+        <input
+          className={s.input}
+          type="tel"
+          name="email"
+          value={email}
+          onChange={handleChangeInput}
+          required
+        />
+      </label>
+      <label className={s.lable}>
+        Password
+        <input
+          className={s.input}
+          type="tel"
+          name="password"
+          value={password}
+          onChange={handleChangeInput}
+          required
+        />
+      </label>
+      <button className={s.button} type="submit">
+        Add contact
+        {/* {location === '/login' ? 'Login' : 'Sign Up'} */}
+      </button>
 
-        {/* <div className={styles.errorContainer}>
+      {/* <div className={styles.errorContainer}>
           {error && (
             <p className={styles.error}>
               {location === '/login'
@@ -104,7 +121,6 @@ export default function AuthorizationForm() {
             </p>
           )}
         </div> */}
-      </form>
-    </div>
+    </form>
   );
 }
