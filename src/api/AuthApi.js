@@ -9,9 +9,6 @@ export const token = {
   },
 };
 
-// const authApi = axios.create({
-//   baseURL: 'https://connections-api.herokuapp.com/',
-// });
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
 
 export const signupUserApi = data => {
@@ -29,9 +26,6 @@ export const getCurrentUserApi = userToken => {
   return axios.get('/users/current').then(response => response.data);
 };
 
-// export const userLogout = async userToken => {
-//   token.set(userToken);
-//   const data = await axios.post('/users/logout');
-//   token.unSet();
-//   return data;
-// };
+export const logoutUserApi = () => {
+  return axios.post('/users/logout').then(response => response.data);
+};

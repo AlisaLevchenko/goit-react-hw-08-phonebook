@@ -1,14 +1,11 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import {
-  lazy,
-  useEffect,
-  // useState
-} from 'react';
+import { lazy, useEffect } from 'react';
+import PrivateRoute from './rote/PrivateRoute';
+import PublicRoute from './rote/PublicRoute';
 import { getCurrentUser } from '../redux/auth/authOperations';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIsAuth } from '../redux/auth/authSelector';
 import MainWrapper from './mainWrapper/MainWrapper';
-import { token as axiosToken } from '../api/Mockapi';
 
 const HomePage = lazy(() => import('../pages/homePage/HomePage'));
 const ContactsPage = lazy(() => import('../pages/contactsPage/ContactsPage'));
@@ -20,9 +17,9 @@ export default function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(token);
-    dispatch(getCurrentUser(token));
-    // axiosToken.set(token);
+    if (token) {
+      dispatch(getCurrentUser(token));
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -30,11 +27,20 @@ export default function App() {
     <Routes>
       <Route path="/" element={<MainWrapper />}>
         <Route index element={<HomePage />} />
-        <Route path="register" element={<SignupPage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="contacts" element={<ContactsPage />} />
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route
+          path="register"
+          element={<PublicRoute component={SignupPage} restricted />}
+        />
+        <Route
+          path="login"
+          element={<PublicRoute component={LoginPage} restricted />}
+        />
+        <Route
+          path="contacts"
+          element={<PrivateRoute component={ContactsPage} />}
+        />
       </Route>
+      <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
   );
 }

@@ -1,25 +1,29 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
-import { Suspense } from 'react';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { Suspense, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Loader from 'components/loader/Loader';
 import Navigation from '../navigation/Navigation';
-// import { useDispatch } from 'react-redux';
-// import { authToggle } from '../../redux/auth/authSlice';
-// import { useState } from 'react';
+import { getIsAuth } from '../../redux/auth/authSelector';
 
-export default function MainWrapper({ isAuth }) {
-  // const [isLoggedIn] = useState();
-  // const dispatch = useDispatch();
+export default function MainWrapper() {
+  const isAuth = useSelector(getIsAuth);
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (pathname === '/') {
+      isAuth ? navigate('/contacts') : navigate('/login');
+    }
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <div>
       <header>
-        <Navigation isAuth={isAuth} />
-        {/* <button onClick={() => dispatch(authToggle())}>
-          Auth Toggle(in, out)
-        </button> */}
+        <Navigation />
       </header>
       <main>
-        {/* {!isLoggedIn ? <AuthorizationNav /> : <UserMenu />} */}
         <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>

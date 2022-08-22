@@ -9,7 +9,7 @@ export const getContacts = createAsyncThunk(
   'getContacts',
   async (param, thunkApi) => {
     try {
-      const contact = await getContactsApi();
+      const contact = await getContactsApi(param);
       return contact;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);

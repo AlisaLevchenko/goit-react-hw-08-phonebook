@@ -8,7 +8,6 @@ export const token = {
     axios.defaults.headers.common.Authorization = '';
   },
 };
-axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
 
 export const getContactsApi = userToken => {
   token.set(userToken);

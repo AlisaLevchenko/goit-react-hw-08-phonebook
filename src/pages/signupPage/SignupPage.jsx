@@ -5,7 +5,7 @@ const SignupPage = () => {
   return (
     <div className={s.container}>
       <h1 className={s.title}>Let's Sign Up!</h1>
-      <AuthorizationForm title="SignUp" />
+      <AuthorizationForm title="Sign Up" />
     </div>
   );
 };

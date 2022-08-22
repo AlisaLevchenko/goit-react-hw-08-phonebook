@@ -6,7 +6,7 @@ import {
 } from '../../redux/contacts/ContactsOperations';
 import {
   getFilteredContacts,
-  getIsLoading,
+  // getIsLoading,
 } from '../../redux/contacts/ContactsSelectors';
 
 import s from './ContactsList.module.css';
@@ -14,7 +14,7 @@ import s from './ContactsList.module.css';
 function ContactList() {
   const dispatch = useDispatch();
   const filteredContact = useSelector(getFilteredContacts);
-  const isLoading = useSelector(getIsLoading);
+  // const isLoading = useSelector(getIsLoading);
 
   // useEffect(() => {
   //   dispatch(getContacts());
@@ -37,7 +37,7 @@ function ContactList() {
           </li>
         ))}
       </ul>
-      {isLoading && <h3>Loading...</h3>}
+      {/* {isLoading && <h3>Loading...</h3>} */}
     </section>
   );
 }

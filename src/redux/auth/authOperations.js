@@ -3,7 +3,8 @@ import {
   signupUserApi,
   loginUserApi,
   getCurrentUserApi,
-} from '../../apiAuth/AuthApi';
+  logoutUserApi,
+} from '../../api/AuthApi';
 
 export const signupUser = createAsyncThunk(
   'authSignup',
@@ -36,6 +37,18 @@ export const getCurrentUser = createAsyncThunk(
       const postedUserInfo = await getCurrentUserApi(userInfo);
       console.log(postedUserInfo);
       return postedUserInfo;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const logOutUser = createAsyncThunk(
+  'authLogout',
+  async (_, { rejectWithValue }) => {
+    try {
+      await logoutUserApi();
+      return;
     } catch (error) {
       return rejectWithValue(error.message);
     }

@@ -1,19 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
-// import { AiOutlineLogout } from 'react-icons/ai';
-import { getUserEmail } from 'redux/auth/authSelector';
+import { getUserName } from 'redux/auth/authSelector';
 import { Button } from '@mui/material';
 import { logOutUser } from 'redux/auth/authOperations';
 
 function UserMenu() {
-  const email = useSelector(getUserEmail);
+  const name = useSelector(getUserName);
   const dispatch = useDispatch();
 
   return (
     <div>
-      <p>{email}</p>
+      <p>{name}</p>
       <Button variant="contained" onClick={() => dispatch(logOutUser())}>
-        LOG OUT &nbsp;
-        {/* <AiOutlineLogout /> */}
+        LOG OUT
       </Button>
     </div>
   );
