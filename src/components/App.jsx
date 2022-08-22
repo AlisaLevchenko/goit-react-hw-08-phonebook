@@ -8,6 +8,7 @@ import { getCurrentUser } from '../redux/auth/authOperations';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIsAuth } from '../redux/auth/authSelector';
 import MainWrapper from './mainWrapper/MainWrapper';
+import { token as axiosToken } from '../api/Mockapi';
 
 const HomePage = lazy(() => import('../pages/homePage/HomePage'));
 const ContactsPage = lazy(() => import('../pages/contactsPage/ContactsPage'));
@@ -21,6 +22,7 @@ export default function App() {
   useEffect(() => {
     console.log(token);
     dispatch(getCurrentUser(token));
+    // axiosToken.set(token);
     // eslint-disable-next-line
   }, []);
 

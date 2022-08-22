@@ -13,9 +13,9 @@ const authSlice = createSlice({
     error: null,
   },
   reducers: {
-    authToggle(state) {
-      state.isAuth = !state.isAuth;
-    },
+    // authToggle(state) {
+    //   state.isAuth = !state.isAuth;
+    // },
   },
   extraReducers: {
     [signupUser.pending]: state => {
@@ -61,4 +61,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export const { authToggle } = authSlice.actions;
+// export const { authToggle } = authSlice.actions;
